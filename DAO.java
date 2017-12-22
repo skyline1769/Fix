@@ -45,8 +45,9 @@ public class DAO implements DaoInf {
 		} catch (Exception e) {
 			this.exceptional();
 			//fix del 1 errore riga 32
-			this.session.getTransaction().rollback();
-		} finally {
+			this.session.getTransaction().rollback();	
+		} finally 
+		{
 			this.closeSession();
 		}		
 		return a1;		
@@ -64,9 +65,10 @@ public class DAO implements DaoInf {
 		} catch (Exception e) {
 			this.exceptional();
 			// fix errore line 58
-			this.session.getTransaction().rollback();
+			this.session.getTransaction().rollback();{
 			System.err.println("e= "+e);			
-		} finally {
+		} finally 
+		
 			this.closeSession();			
 		}
 		return p;
@@ -80,13 +82,15 @@ public class DAO implements DaoInf {
 			this.session.beginTransaction();
 			
 			u = (Users) this.session.get(Users.class, id);
-			//fix bug line 75
-			this.session.getTransaction().rollback();
+	
 			return u;
 		} catch (Exception e) {
 			this.exceptional();
+			//fix bug line 75
+			this.session.getTransaction().rollback();
 			System.err.println("e= "+e);
-		} finally {
+		} finally 
+	{
 			this.closeSession();			
 		}		
 		return u;
@@ -108,10 +112,11 @@ public class DAO implements DaoInf {
 			}			
 		} catch (Exception e) {
 			this.exceptional();
-			System.err.println("e= "+e);			
-		} finally {
 			//fix bug line 111
 			this.session.getTransaction().rollback();
+			System.err.println("e= "+e);			
+		} finally {
+			
 			this.closeSession();			
 		}
 		return false;
@@ -182,10 +187,11 @@ public class DAO implements DaoInf {
 		try {
 			String q = "SELECT * FROM users inner join parking on users.ID = parking.USERID group by users.ID";
 			a1 = template.query(q, new UserMapping());
-		} catch (Exception e) {
+		} catch (Exception e) 
+		//fix bug line 181
+				this.session.getTransaction().rollback(); {
 			System.err.println(e.getMessage());
-		}//fix bug line 181
-		this.session.getTransaction().rollback(); 
+		}
 		finally {
 		}		
 		return a1;		

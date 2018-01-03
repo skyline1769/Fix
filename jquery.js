@@ -216,10 +216,10 @@ jQuery.extend = jQuery.fn.extend = function() {
 	// Extend jQuery itself if only one argument is passed
 	if ( i === length ) {
 		target = this;
-		i--;
+		i=i-1;
 	}
 
-	for ( ; i < length; i++ ) {
+	for ( i=0; i < length; i++ ) {
 
 		// Only deal with non-null/undefined values
 		if ( ( options = arguments[ i ] ) != null ) {
@@ -417,7 +417,8 @@ jQuery.extend( {
 			i = first.length;
 
 		for ( ; j < len; j++ ) {
-			first[ i++ ] = second[ j ];
+			i=i+1;
+			first[ i ] = second[ j ];
 		}
 
 		first.length = i;

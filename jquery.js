@@ -205,7 +205,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 
 		// Skip the boolean and the target
 		target = arguments[ i ] || {};
-		i++;
+		i=i++;
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)

@@ -274,7 +274,7 @@ if (typeof jQuery === 'undefined') {
 
   $.fn.button             = Plugin;
   $.fn.button.Constructor = Button;
-}
+
 
   // BUTTON NO CONFLICT
   // ==================
@@ -283,8 +283,7 @@ if (typeof jQuery === 'undefined') {
     $.fn.button = old;
     return this;
   }
-}
-
+}}
   // BUTTON DATA-API
   // ===============
 +function ($) {
@@ -320,7 +319,6 @@ if (typeof jQuery === 'undefined') {
 
   // CAROUSEL CLASS DEFINITION
   // =========================
-
   var Carousel = function (element, options) {
     this.$element    = $(element);
     this.$indicators = this.$element.find('.carousel-indicators');
@@ -337,7 +335,7 @@ if (typeof jQuery === 'undefined') {
       .on('mouseenter.bs.carousel', $.proxy(this.pause, this))
       .on('mouseleave.bs.carousel', $.proxy(this.cycle, this));
   }
-}
+
 
 +function ($) {
   Carousel.VERSION  = '3.3.7';
@@ -350,6 +348,7 @@ if (typeof jQuery === 'undefined') {
     wrap: true,
     keyboard: true
   };
+}
 }
 
 +function ($) {
@@ -520,7 +519,7 @@ if (typeof jQuery === 'undefined') {
 
   $.fn.carousel             = Plugin;
   $.fn.carousel.Constructor = Carousel;
-}
+
 
   // CAROUSEL NO CONFLICT
   // ====================
@@ -530,6 +529,7 @@ if (typeof jQuery === 'undefined') {
     $.fn.carousel = old;
     return this;
   }
+}
 }
 
   // CAROUSEL DATA-API
@@ -553,9 +553,9 @@ if (typeof jQuery === 'undefined') {
 
     e.preventDefault();
   }
-}
 
-+function ($) {
+
+
   $(document)
     .on('click.bs.carousel.data-api', '[data-slide]', clickHandler)
     .on('click.bs.carousel.data-api', '[data-slide-to]', clickHandler);
@@ -773,12 +773,12 @@ if (typeof jQuery === 'undefined') {
 
   $.fn.collapse             = Plugin;
   $.fn.collapse.Constructor = Collapse;
-}
+
 
   // COLLAPSE NO CONFLICT
   // ====================
 
-+function ($) {
+
   $.fn.collapse.noConflict = function () {
     $.fn.collapse = old;
     return this;
@@ -812,20 +812,7 @@ if (typeof jQuery === 'undefined') {
  * ======================================================================== */
 
 
-+function ($) {
-  'use strict';
 
-  // DROPDOWN CLASS DEFINITION
-  // =========================
-
-  var backdrop = '.dropdown-backdrop';
-  var toggle   = '[data-toggle="dropdown"]';
-  var Dropdown = function (element) {
-    $(element).on('click.bs.dropdown', this.toggle);
-  }
-
-  Dropdown.VERSION = '3.3.7';
-}
 
 +function ($) {
   function getParent($this) {
@@ -841,8 +828,22 @@ if (typeof jQuery === 'undefined') {
     return $parent && $parent.length ? $parent : $this.parent();
   }
 }
-
 +function ($) {
+	  'use strict';
+
+	  // DROPDOWN CLASS DEFINITION
+	  // =========================
+
+	  var backdrop = '.dropdown-backdrop';
+	  var toggle   = '[data-toggle="dropdown"]';
+	  var Dropdown = function (element) {
+	    $(element).on('click.bs.dropdown', this.toggle);
+	  }
+
+	  Dropdown.VERSION = '3.3.7';
+	
+
+
   function clearMenus(e) {
     if (e && e.which === 3) return;
     $(backdrop).remove();
@@ -930,7 +931,7 @@ if (typeof jQuery === 'undefined') {
     var index = $items.index(e.target);
 
     if (e.which == 38 && index > 0){
-    	index--;         // up
+    	index=index-1;         // up
     }
     if (e.which == 40 && index < $items.length - 1) index++;        // down
     if (!~index)                                    index = 0;
@@ -958,13 +959,12 @@ if (typeof jQuery === 'undefined') {
 
   $.fn.dropdown             = Plugin;
   $.fn.dropdown.Constructor = Dropdown;
-}
+
 
   // DROPDOWN NO CONFLICT
   // ====================
 
-+function ($) {
-  $.fn.dropdown.noConflict = function () {
+ $.fn.dropdown.noConflict = function () {
     $.fn.dropdown = old;
     return this;
   }
@@ -1017,9 +1017,9 @@ if (typeof jQuery === 'undefined') {
         }, this));
     }
   }
-}
 
-+function ($) {
+
+
   Modal.VERSION  = '3.3.7';
 
   Modal.TRANSITION_DURATION = 300;
@@ -1316,12 +1316,12 @@ if (typeof jQuery === 'undefined') {
 
   $.fn.modal             = Plugin;
   $.fn.modal.Constructor = Modal;
-}
+
 
   // MODAL NO CONFLICT
   // =================
 
-+function ($) {
+
   $.fn.modal.noConflict = function () {
     $.fn.modal = old;
     return this;
@@ -1812,7 +1812,9 @@ if (typeof jQuery === 'undefined') {
   }
 
   Tooltip.prototype.getUID = function (prefix) {
-    do prefix += ~~(Math.random() * 1000000);
+    do {
+    	prefix += ~~(Math.random() * 1000000);
+    }
     while (document.getElementById(prefix))
     return prefix;
   }
@@ -2341,8 +2343,8 @@ if (typeof jQuery === 'undefined') {
       var $this = $(this);
       var data  = $this.data('bs.tab');
 
-      if (!data) $this.data('bs.tab', (data = new Tab(this)));
-      if (typeof option == 'string') data[option]();
+      if (!data) {$this.data('bs.tab', (data = new Tab(this)));}
+      if (typeof option == 'string') {data[option]();}
     });
   }
 
@@ -2422,10 +2424,10 @@ if (typeof jQuery === 'undefined') {
     var position     = this.$element.offset();
     var targetHeight = this.$target.height();
 
-    if (offsetTop != null && this.affixed == 'top') return scrollTop < offsetTop ? 'top' : false;
+    if (offsetTop != null && this.affixed == 'top') {return scrollTop < offsetTop ? 'top' : false;}
 
     if (this.affixed == 'bottom') {
-      if (offsetTop != null) return (scrollTop + this.unpin <= position.top) ? false : 'bottom';
+      if (offsetTop != null) {return (scrollTop + this.unpin <= position.top) ? false : 'bottom';}
       return (scrollTop + targetHeight <= scrollHeight - offsetBottom) ? false : 'bottom';
     }
 
@@ -2433,8 +2435,8 @@ if (typeof jQuery === 'undefined') {
     var colliderTop    = initializing ? scrollTop : position.top;
     var colliderHeight = initializing ? targetHeight : height;
 
-    if (offsetTop != null && scrollTop <= offsetTop) return 'top';
-    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) return 'bottom';
+    if (offsetTop != null && scrollTop <= offsetTop) {return 'top';}
+    if (offsetBottom != null && (colliderTop + colliderHeight >= scrollHeight - offsetBottom)) {return 'bottom';}
 
     return false;
   }
@@ -2442,7 +2444,7 @@ if (typeof jQuery === 'undefined') {
 
 +function ($) {
   Affix.prototype.getPinnedOffset = function () {
-    if (this.pinnedOffset) return this.pinnedOffset;
+    if (this.pinnedOffset) {return this.pinnedOffset;}
     this.$element.removeClass(Affix.RESET).addClass('affix');
     var scrollTop = this.$target.scrollTop();
     var position  = this.$element.offset();
@@ -2456,7 +2458,7 @@ if (typeof jQuery === 'undefined') {
 
 +function ($) {
   Affix.prototype.checkPosition = function () {
-    if (!this.$element.is(':visible')) return;
+    if (!this.$element.is(':visible')) {return;}
 
     var height       = this.$element.height();
     var offset       = this.options.offset;
@@ -2464,21 +2466,21 @@ if (typeof jQuery === 'undefined') {
     var offsetBottom = offset.bottom;
     var scrollHeight = Math.max($(document).height(), $(document.body).height());
 
-    if (typeof offset != 'object')         offsetBottom = offsetTop = offset;
-    if (typeof offsetTop == 'function')    offsetTop    = offset.top(this.$element);
-    if (typeof offsetBottom == 'function') offsetBottom = offset.bottom(this.$element);
+    if (typeof offset != 'object')         {offsetBottom = offsetTop = offset;}
+    if (typeof offsetTop == 'function')    {offsetTop    = offset.top(this.$element);}
+    if (typeof offsetBottom == 'function') {offsetBottom = offset.bottom(this.$element);}
 
     var affix = this.getState(scrollHeight, height, offsetTop, offsetBottom);
 
     if (this.affixed != affix) {
-      if (this.unpin != null) this.$element.css('top', '');
+      if (this.unpin != null) {this.$element.css('top', '');}
 
       var affixType = 'affix' + (affix ? '-' + affix : '');
       var e         = $.Event(affixType + '.bs.affix');
 
       this.$element.trigger(e);
 
-      if (e.isDefaultPrevented()) return;
+      if (e.isDefaultPrevented()) {return;}
 
       this.affixed = affix;
       this.unpin = affix == 'bottom' ? this.getPinnedOffset() : null;
@@ -2507,8 +2509,8 @@ if (typeof jQuery === 'undefined') {
       var data    = $this.data('bs.affix');
       var options = typeof option == 'object' && option;
 
-      if (!data) $this.data('bs.affix', (data = new Affix(this, options)));
-      if (typeof option == 'string') data[option]();
+      if (!data) {$this.data('bs.affix', (data = new Affix(this, options)));}
+      if (typeof option == 'string') {data[option]();}
     });
   }
 
@@ -2538,8 +2540,8 @@ if (typeof jQuery === 'undefined') {
 
       data.offset = data.offset || {};
 
-      if (data.offsetBottom != null) data.offset.bottom = data.offsetBottom;
-      if (data.offsetTop    != null) data.offset.top    = data.offsetTop;
+      if (data.offsetBottom != null) {data.offset.bottom = data.offsetBottom;}
+      if (data.offsetTop    != null) {data.offset.top    = data.offsetTop;}
 
       Plugin.call($spy, data);
     });

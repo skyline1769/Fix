@@ -504,7 +504,7 @@ jQuery.extend( {
 		};
 
 		// Set the guid of unique handler to the same of original handler, so it can be removed
-		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
+		proxy.guid = fn.guid = fn.guid || jQuery.guid+1;
 
 		return proxy;
 	},
@@ -1612,7 +1612,8 @@ Sizzle.uniqueSort = function( results ) {
 				j = duplicates.push( i );
 			}
 		}
-		while ( j-- ) {
+		while ( j ) {
+			j=j-1;
 			results.splice( duplicates[ j ], 1 );
 		}
 	}
@@ -1870,7 +1871,8 @@ Expr = Sizzle.selectors = {
 
 								i = i + 1;
 								// When found, cache indexes on `parent` and break
-								if ( node.nodeType === 1 && ++diff && node === elem ) {
+								diff=diff+1;
+								if ( node.nodeType === 1 && diff && node === elem ) {
 									uniqueCache[ type ] = [ dirruns, nodeIndex, diff ];
 									break;
 								}
@@ -1903,7 +1905,7 @@ Expr = Sizzle.selectors = {
 									if ( ( ofType ?
 										node.nodeName.toLowerCase() === name :
 										node.nodeType === 1 ) &&
-										++diff ) {
+										(diff+1) ) {
 
 										// Cache the index of each encountered element
 										if ( useCache ) {
@@ -2178,7 +2180,7 @@ for ( i in { submit: true, reset: true } ) {
 }
 
 // Easy API for creating new setFilters
-function setFilters() {}
+
 setFilters.prototype = Expr.filters = Expr.pseudos;
 Expr.setFilters = new setFilters();
 
@@ -3165,7 +3167,7 @@ jQuery.fn.extend( {
 } );
 
 function sibling( cur, dir ) {
-	while ( ( cur == cur[ dir ] ) && cur.nodeType !== 1 ) {}
+
 	return cur;
 }
 
@@ -3389,7 +3391,7 @@ jQuery.Callbacks = function( options ) {
 
 						// Handle firing indexes
 						if ( index <= firingIndex ) {
-							firingIndex--;
+							firingIndex=firingIndex-1;
 						}
 					}
 				} );
@@ -4965,7 +4967,7 @@ function on( elem, types, selector, data, fn, one ) {
 		};
 
 		// Use same guid so caller can remove using origFn
-		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
+		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid+1 );
 	}
 	return elem.each( function() {
 		jQuery.event.add( this, types, fn, data, selector );
@@ -5008,7 +5010,7 @@ jQuery.event = {
 
 		// Make sure that the handler has a unique ID, used to find/remove it later
 		if ( !handler.guid ) {
-			handler.guid = jQuery.guid++;
+			handler.guid = jQuery.guid+1;
 		}
 
 		// Init the element's event structure and main handler, if this is the first
@@ -5028,7 +5030,8 @@ jQuery.event = {
 		// Handle multiple events separated by a space
 		types = ( types || "" ).match( rnothtmlwhite ) || [ "" ];
 		t = types.length;
-		while ( t-- ) {
+		while ( t ) {
+			t=t-1;
 			tmp = rtypenamespace.exec( types[ t ] ) || [];
 			type = origType = tmp[ 1 ];
 			namespaces = ( tmp[ 2 ] || "" ).split( "." ).sort();
@@ -6114,22 +6117,22 @@ var getStyles = function( elem ) {
 		documentElement.appendChild( container );
 
 		var divStyle = window.getComputedStyle( div );
-		pixelPositionVal = divStyle.top !== "1%";
+		var pixelPositionVal = divStyle.top !== "1%";
 
 		// Support: Android 4.0 - 4.3 only, Firefox <=3 - 44
-		reliableMarginLeftVal = divStyle.marginLeft === "2px";
-		boxSizingReliableVal = divStyle.width === "4px";
+		var reliableMarginLeftVal = divStyle.marginLeft === "2px";
+		var boxSizingReliableVal = divStyle.width === "4px";
 
 		// Support: Android 4.0 - 4.3 only
 		// Some styles come back with percentage values, even though they shouldn't
 		div.style.marginRight = "50%";
-		pixelMarginRightVal = divStyle.marginRight === "4px";
+		var pixelMarginRightVal = divStyle.marginRight === "4px";
 
 		documentElement.removeChild( container );
 
 		// Nullify the div so it wouldn't be stored in the memory and
 		// it will also be a sign that checks already performed
-		div = null;
+		var div = null;
 	}
 
 	var pixelPositionVal, boxSizingReliableVal, pixelMarginRightVal, reliableMarginLeftVal,
@@ -7379,7 +7382,8 @@ jQuery.fx.tick = function() {
 
 		// Checks the timer has not already been removed
 		if ( !timer() && timers[ i ] === timer ) {
-			timers.splice( i--, 1 );
+			i = i -1 ;
+			timers.splice( i, 1 );
 		}
 	}
 
@@ -9070,7 +9074,7 @@ jQuery.extend( {
 			// Add or update anti-cache param if needed
 			if ( s.cache === false ) {
 				cacheURL = cacheURL.replace( rantiCache, "$1" );
-				uncached = ( rquery.test( cacheURL ) ? "&" : "?" ) + "_=" + ( nonce++ ) + uncached;
+				uncached = ( rquery.test( cacheURL ) ? "&" : "?" ) + "_=" + ( nonce+1 ) + uncached;
 			}
 
 			// Put hash and anti-cache on the URL that will be requested (gh-1732)
